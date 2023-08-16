@@ -1,4 +1,3 @@
-//차량인식
 import cv2
 import torch
 import torchvision
