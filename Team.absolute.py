@@ -8,17 +8,20 @@ from pynotifier import Notification
 class AI:
     def __init__(self, name):
         self.name = name
+        
+        # TTS 초기화
+        self.engine = pyttsx3.init()
+        self.engine.setProperty('rate', 150)  
+        self.engine.setProperty('volume', 1.0)
 
     def remind_medicine(self):
-        message = f"{self.name}: 약을 먹을 시간입니다!"
-        print(message)
+        message = "약을 먹을 시간입니다."
+        print(f"{self.name}: {message}")
 
-        engine = pyttsx3.init()
-        engine.setProperty('rate', 200) 
-        engine.setProperty('volume', 1.0)
-        engine.say(message)
-        engine.runAndWait()
-        
+        # TTS 실행
+        self.engine.say(message)
+        self.engine.runAndWait()
+
         if platform.system() == "Windows":
             ctypes.windll.user32.MessageBoxW(0, message, "알림", 0)
         elif platform.system() in ["Linux", "Darwin"]:
@@ -33,10 +36,10 @@ class AI:
 
 
 def main():
-    ai = AI("희성")
+    ai = AI("어시스턴트")
 
     schedule.every().day.at("09:00").do(ai.remind_medicine)
-    schedule.every().day.at("12:27").do(ai.remind_medicine)
+    schedule.every().day.at("15:45").do(ai.remind_medicine)
     schedule.every().day.at("19:00").do(ai.remind_medicine)
 
     while True:
